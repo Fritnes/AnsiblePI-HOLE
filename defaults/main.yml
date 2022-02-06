@@ -1,5 +1,6 @@
 ---
-# defaults file for docker
+# defaults file for pi-hole
+docker_folder: "/opt"
 pihole_docker_version: "3"
 pihole_container_name: "pihole"
 pihole_container_image: "pihole/pihole:latest"

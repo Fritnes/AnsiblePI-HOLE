@@ -1,5 +1,5 @@
 ---
-# handlers file for docker
+# handlers file for pi-hole
   - name: Restart {{ pihole_container_name }} container
     systemd:
       state: restarted

@@ -1,38 +1,39 @@
-Role Name
+Role "Pi-hole"
 =========
 
-A brief description of the role goes here.
-
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+https://pi-hole.net/
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+docker_folder: "/opt"
+pihole_docker_version: "3"
+pihole_container_name: "pihole"
+pihole_container_image: "pihole/pihole:latest"
+pihole_ports:
+   - { external_port: "8100", internal_port: "80/tcp"}
+   - { external_port: "53", internal_port: "53/udp"}
+   - { external_port: "53", internal_port: "53/tcp"}
 
-Dependencies
-------------
+pihole_volumes:
+   - { external_valume: "./etc-pihole/", internal_valume: "/etc/pihole/"}
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+pihole_env:
+   - { env_name: "TZ", env_volume: "Europe/Kiev"}
+   - { env_name: "WEBPASSWORD", env_volume: "test"}
+   - { env_name: "PIHOLE_DNS_", env_volume: "8.8.8.8;1.1.1.1"}
+   - { env_name: "DHCP_ACTIVE", env_volume: "false"}
+   - { env_name: "PIHOLE_DOMAIN", env_volume: "lan"}
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
+        - { role: AnsiblePI-HOLE, when: ansible_system == 'Linux' }
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+fritnes
+https://github.com/Fritnes
