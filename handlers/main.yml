@@ -1,0 +1,8 @@
+---
+# handlers file for docker
+  - name: Restart {{ pihole_container_name }} container
+    systemd:
+      state: restarted
+      enabled: yes
+      daemon_reload: yes
+      name: "{{ pihole_container_name }}"

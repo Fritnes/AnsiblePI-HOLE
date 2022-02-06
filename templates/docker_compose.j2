@@ -1,0 +1,31 @@
+version: "{{pihole_docker_version}}"
+
+services:
+  server:
+    image: {{ pihole_container_image }}
+    container_name: {{ pihole_container_name }}
+
+    ports:
+    {% for item in pihole_ports %}
+    - {{ item.external_port }}:{{ item.internal_port }}
+    {% endfor %}
+
+    restart: always
+
+    environment:
+      {% for item in pihole_env %}
+      - {{ item.env_name }}={{ item.env_volume }}
+      {% endfor %}
+
+    volumes:
+      {% for item in pihole_volumes %}
+      - {{ item.external_valume }}:{{ item.internal_valume }}
+      {% endfor %}
+
+
+{% if (pihole_cap_add is defined) and pihole_cap_add %}
+    cap_add:
+      {% for item in pihole_cap_add %}
+      - {{ item }}
+      {% endfor %}
+{% endif %}
